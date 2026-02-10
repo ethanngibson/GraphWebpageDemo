@@ -10,6 +10,7 @@ export type ProfilerNode =
       gc_gen: number;
       alive: boolean;
       created_at_ms: number;
+      freed_at_ms?: number;
       tag?: string;
     }
   | {
@@ -21,6 +22,7 @@ export type ProfilerNode =
       stream: number;
       alive: boolean;
       created_at_ms: number;
+      freed_at_ms?: number;
       tag?: string;
     }
   | {
@@ -66,6 +68,7 @@ function makeFakeProfilerSnapshot(): ProfilerSnapshot {
       gc_gen: i % 3,
       alive: true,
       created_at_ms: 12000 + i * 3,
+      freed_at_ms: i % 5 === 0 ? (12000 + i * 3) + 10 + i * 2 : undefined,
       tag: i === 8 ? "model" : "cpu",
     });
   }
@@ -81,6 +84,7 @@ function makeFakeProfilerSnapshot(): ProfilerSnapshot {
       stream: i % 2 === 0 ? 12 : 7,
       alive: true,
       created_at_ms: 12020 + i * 2,
+      freed_at_ms: i % 4 === 0 ? (12020 + i * 2) + 8 + i * 3 : undefined,
       tag: "gpu",
     });
   }
